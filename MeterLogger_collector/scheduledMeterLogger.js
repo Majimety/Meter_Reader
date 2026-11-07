@@ -1,8 +1,9 @@
+require('dotenv').config();
 const net = require('net');
 const cron = require('node-cron');
 const { InfluxDB, Point } = require('@influxdata/influxdb-client');
-const url = 'http://REMOVED_HOST:8086';
-const token = process.env.INFLUXDB_TOKEN = 'REMOVED_TOKEN==';
+const url = process.env.INFLUXDB_URL;
+const token = process.env.INFLUXDB_TOKEN;
 const org = 'PEA';
 
 const bucket = 'MeterReader';
@@ -22,7 +23,7 @@ async function requestDatas() {
   async function readSingleData(name, requestBuffer) {
 	return new Promise(resolve => {
 		const client = new net.Socket();
-        client.connect(4000, 'REMOVED_HOST', () => {
+        client.connect(4000, process.env.METER_HOST, () => {
             console.log('[' + new Date().toLocaleString() + ' ' + (name) +'] Connected!');
             client.write(requestBuffer);
         });

@@ -10,11 +10,10 @@ function App() {
   const [activeTab, setActiveTab] = useState("");
 
   useEffect(() => {
-    fetch("http://REMOVED_HOST:8086/api/v2/query?orgID=2121303831818e03", {
+    fetch(`${process.env.REACT_APP_INFLUX_URL}/api/v2/query?orgID=2121303831818e03`, {
       method: "POST",
       headers: {
-        Authorization:
-          "Token REMOVED_TOKEN==",
+        Authorization: `Token ${process.env.REACT_APP_INFLUX_TOKEN}`,
         "Content-Type": "application/vnd.flux",
         Accept: "application/csv",
       },
